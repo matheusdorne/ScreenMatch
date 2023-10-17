@@ -8,6 +8,30 @@ public class Titulo {
     private int totalDeAvaliacoes;
     private int duracaoEmMinutos;
 
+    public String getNome() {
+        return nome;
+    }
+
+    public int getAnoDeLancamento() {
+        return anoDeLancamento;
+    }
+
+    public boolean isIncluidoNoPlano() {
+        return incluidoNoPlano;
+    }
+
+    public void setSomaDasAvaliacoes(double somaDasAvaliacoes) {
+        this.somaDasAvaliacoes = somaDasAvaliacoes;
+    }
+
+    public void setTotalDeAvaliacoes(int totalDeAvaliacoes) {
+        this.totalDeAvaliacoes = totalDeAvaliacoes;
+    }
+
+    public int getDuracaoEmMinutos() {
+        return duracaoEmMinutos;
+    }
+
     public double getSomaDasAvaliacoes(){
         return somaDasAvaliacoes;
     }

@@ -1,3 +1,4 @@
+import br.com.screenmatch.calculos.CalculadoraDeTempo;
 import br.com.screenmatch.modelos.Filme;
 import br.com.screenmatch.modelos.Serie;
 
@@ -7,6 +8,8 @@ public class Main {
         meuFilme.setNome("O poderoso chefão");
         meuFilme.setAnoDeLancamento(1970);
         meuFilme.setDuracaoEmMinutos(180);
+        System.out.println("Duracao em minutos: " + meuFilme.getDuracaoEmMinutos());
+
 
 
 
@@ -22,6 +25,25 @@ public class Main {
 
         Serie lost = new Serie();
         lost.setNome("Lost");
+        lost.setAnoDeLancamento(2004);
+        lost.exibeFichaTecnica();
+        lost.setTemporadas(10);
+        lost.setEpisodiosPorTemporada(10);
+        lost.setMinutosPorEpisodio(50);
+        System.out.println("Duracao em minutos: " + lost.getDuracaoEmMinutos());
+
+        Filme outroFilme = new Filme();
+        outroFilme.setNome("Clube da Luta");
+        outroFilme.setAnoDeLancamento(1999);
+        outroFilme.setDuracaoEmMinutos(139);
+
+
+        CalculadoraDeTempo calc = new CalculadoraDeTempo();
+        calc.inclui(meuFilme);
+        calc.inclui(outroFilme);
+        calc.inclui(lost);
+        System.out.println(calc.getTempoTotal());
+
 
 
     }

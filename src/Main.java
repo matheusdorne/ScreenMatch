@@ -1,4 +1,5 @@
 import br.com.screenmatch.calculos.CalculadoraDeTempo;
+import br.com.screenmatch.calculos.FiltroRecomendacao;
 import br.com.screenmatch.modelos.Filme;
 import br.com.screenmatch.modelos.Serie;
 
@@ -43,6 +44,9 @@ public class Main {
         calc.inclui(outroFilme);
         calc.inclui(lost);
         System.out.println(calc.getTempoTotal());
+
+        FiltroRecomendacao filtro = new FiltroRecomendacao();
+        filtro.filtra(meuFilme);
 
 
 

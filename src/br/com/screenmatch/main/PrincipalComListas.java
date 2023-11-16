@@ -20,6 +20,8 @@ public class PrincipalComListas {
         var lost = new Serie("Lost",2004);
         lost.avalia(10);
 
+        Filme f1 = filmeDoMatheus;
+
 
         ArrayList<Titulo> lista = new ArrayList<>();
         lista.add(filmeDoMatheus);
@@ -29,9 +31,10 @@ public class PrincipalComListas {
 
         for (Titulo item : lista) {
             System.out.println(item.getNome());
-            
-            Filme filme = (Filme) item;
-            System.out.println("Classificação: " + filme.getClassificacao());
+            if (item instanceof Filme filme) {
+                System.out.println("Classificação: " + filme.getClassificacao());
+
+            }
         }
     }
 }

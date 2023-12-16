@@ -12,7 +12,7 @@ public class PrincipalComBusca {
         Scanner leitura = new Scanner (System.in);
         System.out.println("Digite um filme para busca: ");
         var busca  = leitura.nextLine();
-        g
+,
        
         String endereco = "http://www.omdbapi.com/?apikey=60826722&t=" + busca;
         

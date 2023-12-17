@@ -1,7 +1,10 @@
 package br.com.screenmatch.main;
 
 import br.com.screenmatch.modelos.Titulo;
+import br.com.screenmatch.modelos.TituloOMDB;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.net.URI;
@@ -16,10 +19,7 @@ public class PrincipalComBusca {
         System.out.println("Digite um filme para busca: ");
         var busca  = leitura.nextLine();
 
-
-       
         String endereco = "http://www.omdbapi.com/?apikey=60826722&t=" + busca;
-        
 
 // Comunicação com webservice
         HttpClient client = HttpClient.newHttpClient();
@@ -32,14 +32,21 @@ public class PrincipalComBusca {
 
         String json = response.body();
         System.out.println(json);
+        // Ajusta a primeira letra maiuscula que vem do site,
+        // já que o padrão de boa prática é letra minuscula nos atributos
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+                .create();
 
 
-        Gson gson = new Gson();
-        Titulo meuTitulo = gson.fromJson(json, Titulo.class);
+        TituloOMDB meuTituloOMDB = gson.fromJson(json,TituloOMDB.class);
+        System.out.println(meuTituloOMDB);
 
-        System.out.println("Titulo: "+meuTitulo.getNome());
+        Titulo meuTitulo =  new Titulo(meuTituloOMDB);
 
+        System.out.println("Titulo já convertido");
 
+        System.out.println(meuTitulo);
 
 
 

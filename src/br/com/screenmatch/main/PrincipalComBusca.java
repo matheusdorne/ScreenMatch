@@ -1,5 +1,6 @@
 package br.com.screenmatch.main;
 
+import br.com.screenmatch.excecao.ErrorDeConversaoDeAnoException;
 import br.com.screenmatch.modelos.Titulo;
 import br.com.screenmatch.modelos.TituloOMDB;
 import com.google.gson.FieldNamingPolicy;
@@ -55,7 +56,11 @@ public class PrincipalComBusca {
         } catch (IllegalArgumentException e) {
             System.out.println("Erro: ");
             System.out.println(e.getMessage());
+        } catch (ErrorDeConversaoDeAnoException e ) {
+            System.out.println("Erro: ");
+            System.out.println(e.getMessage());
         }
+
 
 
 

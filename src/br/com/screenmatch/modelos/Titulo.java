@@ -1,11 +1,11 @@
 package br.com.screenmatch.modelos;
 
+import br.com.screenmatch.excecao.ErrorDeConversaoDeAnoException;
 import com.google.gson.annotations.SerializedName;
 
 public class Titulo implements Comparable<Titulo> {
-    @SerializedName("Title")
+
     private String nome;
-    @SerializedName("Year")
     private int anoDeLancamento;
     private boolean incluidoNoPlano;
     private double somaDasAvaliacoes;
@@ -19,6 +19,10 @@ public class Titulo implements Comparable<Titulo> {
 
     public Titulo(TituloOMDB meuTituloOMDB) {
         this.nome = meuTituloOMDB.title();
+
+        if (meuTituloOMDB.year().length() > 4) {
+            throw  new ErrorDeConversaoDeAnoException("Não foi possivel converter ano.");
+        }
         // Record não possui 'get' existe um metodo para cada atributo
         this.anoDeLancamento = Integer.valueOf(meuTituloOMDB.year());
         // Substring seleciona o index inicial e final a serem pegos da string

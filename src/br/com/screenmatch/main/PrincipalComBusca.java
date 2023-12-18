@@ -19,7 +19,7 @@ public class PrincipalComBusca {
         System.out.println("Digite um filme para busca: ");
         var busca  = leitura.nextLine();
 
-        String endereco = "http://www.omdbapi.com/?apikey=60826722&t=" + busca;
+        String endereco = "http://www.omdbapi.com/?apikey=60826722&t=" + busca.replace(" ", "+");
         try {
 // Comunicação com webservice
             HttpClient client = HttpClient.newHttpClient();
@@ -48,6 +48,7 @@ public class PrincipalComBusca {
 
             System.out.println("Titulo já convertido");
             System.out.println(meuTitulo);
+            // multi-catch posso colocar multiplas exceçoes no mesmo parentese
         } catch (NumberFormatException e) {
             System.out.println("Erro: ");
             System.out.println(e.getMessage());

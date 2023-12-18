@@ -20,46 +20,50 @@ public class PrincipalComBusca {
         var busca  = leitura.nextLine();
 
         String endereco = "http://www.omdbapi.com/?apikey=60826722&t=" + busca;
-
+        try {
 // Comunicação com webservice
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(endereco))
-                .build();
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(endereco))
+                    .build();
 
-        HttpResponse<String> response = client
-                .send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client
+                    .send(request, HttpResponse.BodyHandlers.ofString());
 
-        String json = response.body();
-        System.out.println(json);
-        // Ajusta a primeira letra maiuscula que vem do site,
-        // já que o padrão de boa prática é letra minuscula nos atributos
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
-                .create();
+            String json = response.body();
+            System.out.println(json);
+            // Ajusta a primeira letra maiuscula que vem do site,
+            // já que o padrão de boa prática é letra minuscula nos atributos
+            Gson gson = new GsonBuilder()
+                    .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+                    .create();
 
 
-        TituloOMDB meuTituloOMDB = gson.fromJson(json,TituloOMDB.class);
-        System.out.println(meuTituloOMDB);
+            TituloOMDB meuTituloOMDB = gson.fromJson(json,TituloOMDB.class);
+            System.out.println(meuTituloOMDB);
 
-        try{
+            // try{
             // Convertendo a classe record na classe própria
             Titulo meuTitulo =  new Titulo(meuTituloOMDB);
 
             System.out.println("Titulo já convertido");
             System.out.println(meuTitulo);
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
+            System.out.println("Erro: ");
+            System.out.println(e.getMessage());
+        } catch (IllegalArgumentException e) {
             System.out.println("Erro: ");
             System.out.println(e.getMessage());
         }
+
+
 
         System.out.println("\nPrograma finalizado corretamente");
 
 
 
 
-        
+
 
     }
 }

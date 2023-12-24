@@ -14,36 +14,45 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class PrincipalComBusca {
     public static void main(String[] args) throws IOException, InterruptedException {
-        Scanner leitura = new Scanner (System.in);
-        System.out.println("Digite um filme para busca: ");
-        String busca  = leitura.nextLine();
+        String busca = "";
+        List<Titulo> titulos = new ArrayList<>();
 
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).setPrettyPrinting().create();
+
+        Scanner leitura = new Scanner (System.in);
+
+        while (!busca.equalsIgnoreCase("sair")){
+        System.out.println("Digite um filme para busca: ");
+        busca  = leitura.nextLine();
+
+        if (busca.equalsIgnoreCase("sair")) {
+            break;
+        }
 
         Conexao conecta;
         conecta = new Conexao();
         TituloOMDB meuTituloOMDB = conecta.conectar(busca);
         System.out.println(meuTituloOMDB);
 
-        // try{
         // Convertendo a classe record na classe própria
         Titulo meuTitulo =  new Titulo(meuTituloOMDB);
 
         System.out.println("Titulo já convertido");
         System.out.println(meuTitulo);
+        titulos.add(meuTitulo);
 
-        FileWriter write = new FileWriter("movies.txt");
-        write.write(meuTitulo.toString());
-        write.close();
+        }
+        System.out.println(titulos);
 
-        // multi-catch posso colocar multiplas exceçoes no mesmo parentese
-
-
-
-
+        FileWriter escrita = new FileWriter("movies.json");
+        escrita.write(gson.toJson(titulos));
+        escrita.close();
         System.out.println("\nPrograma finalizado corretamente");
 
 

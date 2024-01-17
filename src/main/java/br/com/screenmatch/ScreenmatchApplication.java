@@ -1,5 +1,6 @@
 package br.com.screenmatch;
 
+import br.com.screenmatch.service.ConsumoAPI;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +16,13 @@ public class ScreenmatchApplication implements CommandLineRunner {
 	// Run se torna o método "main"
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("Primeiro Projeto Spring");
+        var consumoApi = new ConsumoAPI();
+		var json = consumoApi.obterDados("http://www.omdbapi.com/?t=gilmore+girls&Season=1&apikey=60826722");
+		System.out.println(json);
+		
+
+
+
 
 	}
 }

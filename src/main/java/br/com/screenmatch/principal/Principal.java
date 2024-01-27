@@ -6,10 +6,7 @@ import br.com.screenmatch.model.DadosTemporada;
 import br.com.screenmatch.service.ConsumoAPI;
 import br.com.screenmatch.service.ConverteDados;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Principal {
@@ -67,11 +64,17 @@ public class Principal {
 
         List<DadosEpisodio> dadosEpisodios = temporadas.stream()
                 .flatMap(t -> t.episodios().stream())
-                //.collect(Collectors.toList());
-                .toList();
+                .collect(Collectors.toList());
+//Collectors = Cria um conjunto que pode ser alterado.
+// toList = Cria um conjunto imútavel
 
-        dadosEpisodios.add(new DadosEpisodio("test",3, "10","2020-01-01"));
-        dadosEpisodios.forEach(System.out::println);
+        System.out.println("\n Top 5 episódios melhores avaliadas:");
+        dadosEpisodios.stream()
+                .filter(e -> ! e.avaliacao().equalsIgnoreCase("N/A"))
+                .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
+                //Sorted().reversed() = Seleciona de forma decrescente
+                .limit(5)
+                .forEach(System.out::println);
 
 
 

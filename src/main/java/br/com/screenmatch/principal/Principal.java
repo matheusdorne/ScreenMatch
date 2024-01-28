@@ -3,6 +3,7 @@ package br.com.screenmatch.principal;
 import br.com.screenmatch.model.DadosEpisodio;
 import br.com.screenmatch.model.DadosSerie;
 import br.com.screenmatch.model.DadosTemporada;
+import br.com.screenmatch.model.Episodios;
 import br.com.screenmatch.service.ConsumoAPI;
 import br.com.screenmatch.service.ConverteDados;
 

@@ -29,7 +29,7 @@ public class Principal {
         var json = consumo.obterDados(ENDERECO + nomeSerie.replace(" ","+") + API_KEY);
         var dados = conversor.obterDados(json, DadosSerie.class);
 
-        System.out.println(dados);
+//        System.out.println(dados);
 
         		List<DadosTemporada> temporadas = new ArrayList<>();
 
@@ -40,7 +40,7 @@ public class Principal {
 			temporadas.add(dadosTemporada);
 
 		}
-		temporadas.forEach(System.out::println);
+//		temporadas.forEach(System.out::println);
 
 //        for(int i = 0; i < dados.totalTemporadas(); i++ ) {
 //            List<DadosEpisodio> episodiosTemporada = temporadas.get(i).episodios();
@@ -53,7 +53,7 @@ public class Principal {
 //      Utilizando LAMBDA
 
 
-        temporadas.forEach(t -> t.episodios().forEach(e -> System.out.println(e.titulo())));
+//        temporadas.forEach(t -> t.episodios().forEach(e -> System.out.println(e.titulo())));
 
 //    List<String> nomes = Arrays.asList("Jacque", "Iasmin", "Paulo","Rodrigo", "Nico");
 //
@@ -71,12 +71,13 @@ public class Principal {
 //Collectors = Cria um conjunto que pode ser alterado.
 // toList = Cria um conjunto imútavel
 
-        System.out.println("\n Top 5 episódios melhores avaliadas:");
+        System.out.println("\n Top 10 episódios melhores avaliadas:");
         dadosEpisodios.stream()
                 .filter(e -> ! e.avaliacao().equalsIgnoreCase("N/A"))
                 .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
                 //Sorted().reversed() = Seleciona de forma decrescente
-                .limit(5)
+                .limit(10)
+                .map(e -> e.titulo().toUpperCase())
                 .forEach(System.out::println);
 
         List<Episodio> episodios = temporadas.stream()
@@ -84,7 +85,7 @@ public class Principal {
                         .map(d -> new Episodio(t.numero(), d))
                 ).collect(Collectors.toList());
 
-       episodios.forEach(System.out::println);
+//       episodios.forEach(System.out::println);
 
         System.out.println("Visualizar a partir do ano:");
         var ano = leitura.nextInt();

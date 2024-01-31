@@ -3,10 +3,12 @@ package br.com.screenmatch.principal;
 import br.com.screenmatch.model.DadosEpisodio;
 import br.com.screenmatch.model.DadosSerie;
 import br.com.screenmatch.model.DadosTemporada;
-import br.com.screenmatch.model.Episodios;
+import br.com.screenmatch.model.Episodio;
 import br.com.screenmatch.service.ConsumoAPI;
 import br.com.screenmatch.service.ConverteDados;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -77,7 +79,28 @@ public class Principal {
                 .limit(5)
                 .forEach(System.out::println);
 
+        List<Episodio> episodios = temporadas.stream()
+                .flatMap(t -> t.episodios().stream()
+                        .map(d -> new Episodio(t.numero(), d))
+                ).collect(Collectors.toList());
 
+       episodios.forEach(System.out::println);
+
+        System.out.println("Visualizar a partir do ano:");
+        var ano = leitura.nextInt();
+        leitura.nextLine();
+
+        LocalDate dataBusca = LocalDate.of(ano,1,1);
+
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        episodios.stream().filter(e -> e != null || e.getDataLancamento()
+                .isAfter(dataBusca))
+                .forEach(e -> System.out.println(
+                        "Temporada: " + e.getTemporada() +
+                                ", Episódio: " + e.getTitulo() +
+                                ", Data Lançamento: " + e.getDataLancamento().format(formatador)
+                ));
 
     }
 }

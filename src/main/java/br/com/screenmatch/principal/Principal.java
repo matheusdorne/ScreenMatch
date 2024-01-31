@@ -74,10 +74,14 @@ public class Principal {
         System.out.println("\n Top 10 episódios melhores avaliadas:");
         dadosEpisodios.stream()
                 .filter(e -> ! e.avaliacao().equalsIgnoreCase("N/A"))
+                .peek(e -> System.out.println("Primeiro filtro (N/A) " + e))
                 .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
+                .peek(e -> System.out.println("Ordenação " + e))
                 //Sorted().reversed() = Seleciona de forma decrescente
                 .limit(10)
+                .peek(e -> System.out.println("Limitador " + e))
                 .map(e -> e.titulo().toUpperCase())
+                .peek(e -> System.out.println("Mapeamento " + e))
                 .forEach(System.out::println);
 
         List<Episodio> episodios = temporadas.stream()

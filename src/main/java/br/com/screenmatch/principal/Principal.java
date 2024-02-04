@@ -95,11 +95,22 @@ public class Principal {
         System.out.println("Digite trecho do titulo para pesquisa: ");
         var trechoTitulo = leitura.nextLine();
 
+        //Optional é um contêiner que pode ou não conter um valor não nulo.
+        // Para não ter referencias nulas
+
         Optional<Episodio> episodioBuscado = episodios.stream()
-                .filter(e -> e.getTitulo().contains(trechoTitulo))
+                .filter(e -> e.getTitulo().toUpperCase().contains(trechoTitulo.toUpperCase()))
                 .findFirst();
 
-        System.out.println(episodios);
+        if (episodioBuscado.isPresent()) {
+            System.out.println("Episódio encontrado!");
+            // .get() serve para pegar a referencia dentro do container
+            System.out.println("Temporada: " + episodioBuscado.get().getTemporada());
+        } else {
+            System.out.println("Episódio não encontrado!");
+        }
+
+
 
 //        System.out.println("Visualizar a partir do ano:");
 //        var ano = leitura.nextInt();

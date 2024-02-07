@@ -1,2 +1,2 @@
-# ScreenMatch-SpringBoot
- Primeiro projeto utilizando SpringBoot
+# ScreenMatch
+ Primeiro projeto utilizando SpringBoot criado no curso da ALura.

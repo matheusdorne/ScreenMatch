@@ -1,16 +1,11 @@
 package br.com.screenmatch.principal;
 
-import br.com.screenmatch.model.DadosEpisodio;
 import br.com.screenmatch.model.DadosSerie;
 import br.com.screenmatch.model.DadosTemporada;
-import br.com.screenmatch.model.Episodio;
 import br.com.screenmatch.service.ConsumoAPI;
 import br.com.screenmatch.service.ConverteDados;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Principal {
 
@@ -21,7 +16,7 @@ public class Principal {
     private final String ENDERECO = "http://www.omdbapi.com/?t=";
     private final String API_KEY = "&apikey=60826722";
 
-    private List<DadosSerie> series = new ArrayList<>();
+    private List<DadosSerie> dadosSeries = new ArrayList<>();
 
 
 
@@ -30,7 +25,8 @@ public class Principal {
             var menu = """
                  \n
                  1 - Buscar séries 
-                 2 - Buscar episódios 
+                 2 - Buscar episódios  
+                 3 - Buscar historico de séries
                  
                  0 - Sair 
                  
@@ -43,6 +39,7 @@ public class Principal {
             switch (opcao) {
                 case 1 -> buscarSeriesWeb();
                 case 2 -> buscarEpisodiosPorSerie();
+                case 3 -> listarHistoricoSerie();
                 case 0 -> System.exit(0);
                 default -> System.out.println("Opção inválida");
             }
@@ -62,6 +59,7 @@ public class Principal {
 
     private void buscarSeriesWeb() {
         DadosSerie dados = getDadosSerie();
+        dadosSeries.add(dados);
         System.out.println(dados);
     }
 
@@ -76,5 +74,9 @@ public class Principal {
             temporadas.add(temporada);
         }
         temporadas.forEach(System.out::println);
+    }
+
+    private void listarHistoricoSerie() {
+        dadosSeries.forEach(System.out::println);
     }
 }

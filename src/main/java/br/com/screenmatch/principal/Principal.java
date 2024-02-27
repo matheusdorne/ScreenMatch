@@ -2,13 +2,15 @@ package br.com.screenmatch.principal;
 
 import br.com.screenmatch.model.DadosSerie;
 import br.com.screenmatch.model.DadosTemporada;
+import br.com.screenmatch.model.Serie;
 import br.com.screenmatch.service.ConsumoAPI;
 import br.com.screenmatch.service.ConverteDados;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Principal {
-
+//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
     private Scanner leitura = new Scanner(System.in);
     private ConsumoAPI consumo = new ConsumoAPI();
     private ConverteDados conversor = new ConverteDados();
@@ -77,6 +79,13 @@ public class Principal {
     }
 
     private void listarHistoricoSerie() {
-        dadosSeries.forEach(System.out::println);
+        List<Serie> series = new ArrayList<>();
+        series = dadosSeries
+                .stream()
+                .map(d -> new Serie(d))
+                        .collect(Collectors.toList());
+
+        series.stream().sorted(Comparator.comparing(Serie::getGenero))
+                .forEach(System.out::println);
     }
 }

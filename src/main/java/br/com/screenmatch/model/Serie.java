@@ -41,6 +41,10 @@ public class Serie {
 
     }
 
+    public Serie() {
+        //JPA exige um construtor padrão
+    }
+
     public Long getId() {
         return id;
     }

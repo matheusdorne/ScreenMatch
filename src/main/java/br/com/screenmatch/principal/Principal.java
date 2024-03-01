@@ -37,7 +37,8 @@ public class Principal {
                  \n
                  1 - Buscar séries 
                  2 - Buscar episódios  
-                 3 - Buscar historico de séries
+                 3 - Buscar historico de séries 
+                 4 - Buscar série por titulo;
                  
                  0 - Sair 
                  
@@ -51,11 +52,14 @@ public class Principal {
                 case 1 -> buscarSeriesWeb();
                 case 2 -> buscarEpisodiosPorSerie();
                 case 3 -> listarHistoricoSerie();
+                case 4 -> buscarSeriePorTitulo();
                 case 0 -> System.exit(0);
                 default -> System.out.println("Opção inválida");
             }
         }
     }
+
+
 
     private DadosSerie getDadosSerie() {
         System.out.println("\nSérie para pesquisa:");
@@ -123,5 +127,10 @@ public class Principal {
 
         series.stream().sorted(Comparator.comparing(Serie::getGenero))
                 .forEach(System.out::println);
+    }
+
+    private void buscarSeriePorTitulo() {
+        System.out.println("Escolha uma série pelo nome: ");
+
     }
 }

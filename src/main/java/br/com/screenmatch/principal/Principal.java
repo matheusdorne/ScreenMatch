@@ -82,10 +82,10 @@ public class Principal {
 
 
     private void buscarEpisodiosPorSerie() {
-        System.out.println("Digite a série pelo nome: ");
+        listarHistoricoSerie();
+        System.out.println("Escolha uma série pelo nome: ");
         var nomeSerie = leitura.nextLine();
-        series.stream()
-                .forEach(s -> System.out.println(s.getId() + " - " + s.getTitulo()));
+
 
         Optional<Serie> serie = series.stream()
                 .filter(s -> s.getTitulo().toLowerCase().contains(nomeSerie.toLowerCase()))

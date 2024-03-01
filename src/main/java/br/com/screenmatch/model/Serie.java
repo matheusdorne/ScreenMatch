@@ -25,7 +25,8 @@ public class Serie {
     private String poster;
     private String atores;
 
-    @OneToMany(mappedBy = "serie")
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    // Atributos determinam respectivamente: nome da coluna, efeito em cascata para CRUD, formato de carregamento que traz as entidades mesmo não solicitando
     private List<Episodio> episodios  = new ArrayList<>();
 
     public Serie (DadosSerie dadosSerie) {
@@ -58,6 +59,8 @@ public class Serie {
     }
 
     public void setEpisodios(List<Episodio> episodios) {
+        episodios.forEach(e -> e.setSerie(this));
+        // Denomina o "dono" de cada episódio
         this.episodios = episodios;
     }
 
@@ -126,6 +129,7 @@ public class Serie {
                 "\nAvaliacao = " + avaliacao +
                 "\nSinopse = " + sinopse +
                 "\nPoster = " + poster +
-                "\nAtores = " + atores + "\n";
+                "\nAtores = " + atores + "\n" +
+                "\nEpisódios = " + episodios + '\'';
     }
 }

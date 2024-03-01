@@ -38,7 +38,7 @@ public class Principal {
                  1 - Buscar séries 
                  2 - Buscar episódios  
                  3 - Buscar historico de séries 
-                 4 - Buscar série por titulo;
+                 4 - Buscar série por titulo
                  
                  0 - Sair 
                  
@@ -77,7 +77,6 @@ public class Principal {
         dadosSeries.add(dados);
         //Injeção de dependência
         Serie serie = new Serie(dados);
-
         //Parte responsável pela injeção no banco
         repositorio.save(serie);
 
@@ -91,9 +90,7 @@ public class Principal {
         var nomeSerie = leitura.nextLine();
 
 
-        Optional<Serie> serie = series.stream()
-                .filter(s -> s.getTitulo().toLowerCase().contains(nomeSerie.toLowerCase()))
-                .findFirst();
+        Optional<Serie> serie = repositorio.findByTituloContainingIgnoreCase(nomeSerie);
 
         if (serie.isPresent()){
 
@@ -131,6 +128,16 @@ public class Principal {
 
     private void buscarSeriePorTitulo() {
         System.out.println("Escolha uma série pelo nome: ");
+        var nomeSerie = leitura.nextLine();
+        Optional<Serie> serieBuscada = repositorio.findByTituloContainingIgnoreCase(nomeSerie);
+
+        if (serieBuscada.isPresent()) {
+            System.out.println("Dados da série: " + serieBuscada.get());
+
+        } else {
+            System.out.println("Série não encontrada!");
+        }
+
 
     }
 }

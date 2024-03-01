@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface SerieRepository extends JpaRepository<Serie,Long> {
     //Esse extends será reponsavel pelo CRUD <Quem é minha entidade, qual é o tipo da minha ID>
     Optional<Serie>findByTituloContainingIgnoreCase(String nomeSerie);
+
+    // Jpa vai se basear no nome criado para criar uma consulta derivada no banco
 }

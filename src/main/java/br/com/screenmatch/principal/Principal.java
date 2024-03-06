@@ -28,23 +28,23 @@ public class Principal {
     }
 
 
-    public void exibeMenu(){
+    public void exibeMenu() {
         while (true) {
             var menu = """
-                 \n
-                 1 - Buscar Séries 
-                 2 - Buscar Episódios  
-                 3 - Buscar Historico De Séries 
-                 4 - Buscar Série Por Titulo 
-                 5 - Buscar Série Por Ator 
-                 6 - Top 5 Séries 
-                 7 - Buscar Séries Por Categoria 
-                 8 - Buscar por Máximo de Temporada e Availiaçao Mínima
-                 
-                 0 - Sair 
-                 
-                 Escolha sua opção: 
-                """;
+                     \n
+                     1 - Buscar Séries 
+                     2 - Buscar Episódios  
+                     3 - Buscar Historico De Séries 
+                     4 - Buscar Série Por Titulo 
+                     5 - Buscar Série Por Ator 
+                     6 - Top 5 Séries 
+                     7 - Buscar Séries Por Categoria 
+                     8 - Buscar por Máximo de Temporada e Availiaçao Mínima
+                     
+                     0 - Sair 
+                     
+                     Escolha sua opção: 
+                    """;
             System.out.println(menu);
             var opcao = leitura.nextInt();
             leitura.nextLine();
@@ -58,12 +58,12 @@ public class Principal {
                 case 6 -> buscarTop5Series();
                 case 7 -> buscarSeriesPorCategoria();
                 case 8 -> buscarTotalTemporadasEAvaliacao();
+                case 9 -> buscarEpisodiosPorTrecho();
                 case 0 -> System.exit(0);
                 default -> System.out.println("Opção inválida");
             }
         }
     }
-
 
 
     private DadosSerie getDadosSerie() {
@@ -72,8 +72,8 @@ public class Principal {
         var nomeSerie = leitura.nextLine();
         System.out.println(nomeSerie);
 
-        var json = consumo.obterDados(ENDERECO + nomeSerie.replace(" ","+") + API_KEY);
-        DadosSerie dados =  conversor.obterDados(json, DadosSerie.class);
+        var json = consumo.obterDados(ENDERECO + nomeSerie.replace(" ", "+") + API_KEY);
+        DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
         return dados;
     }
 
@@ -97,14 +97,14 @@ public class Principal {
 
         Optional<Serie> serie = repositorio.findByTituloContainingIgnoreCase(nomeSerie);
 
-        if (serie.isPresent()){
+        if (serie.isPresent()) {
 
             var serieEncontrada = serie.get();
 
             List<DadosTemporada> temporadas = new ArrayList<>();
 
             for (int i = 1; i <= serieEncontrada.getTotalTemporadas(); i++) {
-                var json = consumo.obterDados(ENDERECO + serieEncontrada.getTitulo().replace(" ","+") + "&Season=" + i + API_KEY);
+                var json = consumo.obterDados(ENDERECO + serieEncontrada.getTitulo().replace(" ", "+") + "&Season=" + i + API_KEY);
                 DadosTemporada temporada = conversor.obterDados(json, DadosTemporada.class);
                 temporadas.add(temporada);
             }
@@ -152,14 +152,14 @@ public class Principal {
         System.out.println("A partir de que avaliação?");
         var avaliacao = leitura.nextDouble();
         leitura.nextLine();
-        List<Serie> seriesEncontradas = repositorio.findByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(nomeAtor,avaliacao);
-        System.out.println("Séries que " + nomeAtor + "participou" );
+        List<Serie> seriesEncontradas = repositorio.findByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(nomeAtor, avaliacao);
+        System.out.println("Séries que " + nomeAtor + "participou");
         seriesEncontradas.stream().forEach(s -> System.out.println(s.getTitulo() + " - Availiação: " + s.getAvaliacao()));
     }
 
     private void buscarTop5Series() {
 
-        List<Serie>  serieTop = repositorio.findTop5ByOrderByAvaliacaoDesc();
+        List<Serie> serieTop = repositorio.findTop5ByOrderByAvaliacaoDesc();
         serieTop.forEach(s -> System.out.println(s.getTitulo() + " - Availiação: " + s.getAvaliacao()));
     }
 
@@ -179,13 +179,17 @@ public class Principal {
         System.out.println("Buscar por avaliação maior ou igual a:");
         var avaliacao = leitura.nextDouble();
         leitura.nextLine();
-        List<Serie> seriesPorTemporadasEAvaliacao = repositorio.seriesPorTemporadaEAvaliacao(numeroTemporadas,avaliacao);
+        List<Serie> seriesPorTemporadasEAvaliacao = repositorio.seriesPorTemporadaEAvaliacao(numeroTemporadas, avaliacao);
         System.out.println("Séries com até " + numeroTemporadas + " temporadas e avaliação maior ou igual a " + avaliacao);
         seriesPorTemporadasEAvaliacao.forEach(s -> System.out.println(s.getTitulo() + " - Availiação: " + s.getAvaliacao()));
 
     }
 
-
+    private void buscarEpisodiosPorTrecho() {
+        System.out.println("Buscar por trecho:");
+        var trechoEpisodio = leitura.nextLine();
+        List<Episodio> episodiosEncontrados = repositorio.episodiosPorTrecho(trechoEpisodio);
+    }
 
 
 }

@@ -28,8 +28,12 @@ public interface SerieRepository extends JpaRepository<Serie,Long> {
 
     @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE e.titulo ILIKE %:trechoEpisodio%")
     List<Episodio> episodiosPorTrecho(String trechoEpisodio);
-
-
     //ILIKE é um operador que ignora case sensitive
     //%% é um operador que busca por qualquer coisa que tenha o trecho
+
+    @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s = :serie ORDER BY e.avaliacao DESC LIMIT 5")
+    List<Episodio> topEpisodiosPorSerie(Serie serie);
+
+
+
 }

@@ -39,7 +39,8 @@ public class Principal {
                      5 - Buscar Série Por Ator 
                      6 - Top 5 Séries 
                      7 - Buscar Séries Por Categoria 
-                     8 - Buscar por Máximo de Temporada e Availiaçao Mínima
+                     8 - Buscar por Máximo de Temporada e Availiaçao Mínima 
+                     9 - Buscar Episódios Por Trecho
                      
                      0 - Sair 
                      

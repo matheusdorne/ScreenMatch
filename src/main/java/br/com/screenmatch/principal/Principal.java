@@ -1,9 +1,6 @@
 package br.com.screenmatch.principal;
 
-import br.com.screenmatch.model.DadosSerie;
-import br.com.screenmatch.model.DadosTemporada;
-import br.com.screenmatch.model.Episodio;
-import br.com.screenmatch.model.Serie;
+import br.com.screenmatch.model.*;
 import br.com.screenmatch.repository.SerieRepository;
 import br.com.screenmatch.service.ConsumoAPI;
 import br.com.screenmatch.service.ConverteDados;
@@ -35,10 +32,13 @@ public class Principal {
         while (true) {
             var menu = """
                  \n
-                 1 - Buscar séries 
-                 2 - Buscar episódios  
-                 3 - Buscar historico de séries 
-                 4 - Buscar série por titulo
+                 1 - Buscar Séries 
+                 2 - Buscar Episódios  
+                 3 - Buscar Historico De Séries 
+                 4 - Buscar Série Por Titulo 
+                 5 - Buscar Série Por Ator 
+                 6 - Top 5 Séries 
+                 7 - Buscar Séries Por Categoria
                  
                  0 - Sair 
                  
@@ -53,6 +53,9 @@ public class Principal {
                 case 2 -> buscarEpisodiosPorSerie();
                 case 3 -> listarHistoricoSerie();
                 case 4 -> buscarSeriePorTitulo();
+                case 5 -> buscarSeriePorAtor();
+                case 6 -> buscarTop5Series();
+                case 7 -> buscarSeriesPorCategoria();
                 case 0 -> System.exit(0);
                 default -> System.out.println("Opção inválida");
             }
@@ -138,6 +141,35 @@ public class Principal {
             System.out.println("Série não encontrada!");
         }
 
-
     }
+
+    private void buscarSeriePorAtor() {
+
+        System.out.println("Qual o nome para busca?");
+        var nomeAtor = leitura.nextLine();
+        System.out.println("A partir de que avaliação?");
+        var avaliacao = leitura.nextDouble();
+        leitura.nextLine();
+        List<Serie> seriesEncontradas = repositorio.findByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(nomeAtor,avaliacao);
+        System.out.println("Séries que " + nomeAtor + "participou" );
+        seriesEncontradas.stream().forEach(s -> System.out.println(s.getTitulo() + " - Availiação: " + s.getAvaliacao()));
+    }
+
+    private void buscarTop5Series() {
+
+        List<Serie>  serieTop = repositorio.findTop5ByOrderByAvaliacaoDesc();
+        serieTop.forEach(s -> System.out.println(s.getTitulo() + " - Availiação: " + s.getAvaliacao()));
+    }
+
+    private void buscarSeriesPorCategoria() {
+        System.out.println("Buscar por qual categoria?");
+        var nomeGenero = leitura.nextLine();
+        Categoria categoria = Categoria.fromPortugues(nomeGenero);
+        List<Serie> seriesPorCategoria = repositorio.findByGenero(categoria);
+        System.out.println("Séries da categoria " + categoria);
+        seriesPorCategoria.forEach(s -> System.out.println(s.getTitulo() + " - Availiação: " + s.getAvaliacao()));
+    }
+
+
+
 }

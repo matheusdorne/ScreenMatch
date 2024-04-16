@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,6 +45,25 @@ public class SerieService {
 
 
     public List<SerieDTO> obterLancamentos() {
-        return converteParaDTO(repositorio.findTop5ByOrderByEpisodiosDataLancamentoDesc());
+        return converteParaDTO(repositorio.encontrarEpisodiosMaisRecentes());
+    }
+
+    public SerieDTO obterPorId(Long id) { //Esse método é responsável por buscar uma série por ID
+        Optional<Serie> serie = repositorio.findById(id);
+
+        if (serie.isPresent()) {
+            return new SerieDTO(
+                    serie.get().getId(),
+                    serie.get().getTitulo(),
+                    serie.get().getTotalTemporadas(),
+                    serie.get().getAvaliacao(),
+                    serie.get().getGenero(),
+                    serie.get().getSinopse(),
+                    serie.get().getPoster(),
+                    serie.get().getAtores());
+        }
+        return null;
+
     }
 }
+

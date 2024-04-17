@@ -75,15 +75,17 @@ public class Principal {
 
 
     private DadosSerie getDadosSerie() {
-        System.out.println("\nSérie para pesquisa:");
-
-        var nomeSerie = leitura.nextLine();
-        System.out.println(nomeSerie);
-
+//        System.out.println("\nSérie para pesquisa:");
+//
+//        var nomeSerie = leitura.nextLine();
+//        System.out.println(nomeSerie);
+        var nomeSerie = "how i met your mother";
         var json = consumo.obterDados(ENDERECO + nomeSerie.replace(" ", "+") + API_KEY);
         DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
         return dados;
     }
+
+
 
     private void buscarSeriesWeb() {
         DadosSerie dados = getDadosSerie();
@@ -95,6 +97,8 @@ public class Principal {
 
         System.out.println(dados);
     }
+
+
 
 
     private void buscarEpisodiosPorSerie() {

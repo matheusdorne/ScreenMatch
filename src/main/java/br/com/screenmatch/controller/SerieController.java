@@ -1,6 +1,8 @@
 package br.com.screenmatch.controller;
 
+import br.com.screenmatch.dto.EpisodioDTO;
 import br.com.screenmatch.dto.SerieDTO;
+import br.com.screenmatch.model.Episodio;
 import br.com.screenmatch.model.Serie;
 import br.com.screenmatch.repository.SerieRepository;
 import br.com.screenmatch.service.SerieService;
@@ -43,5 +45,10 @@ public class SerieController {
     @GetMapping("/{id}")
     public SerieDTO obterPorId(@PathVariable Long id) {
         return servico.obterPorId(id);
+    }
+
+    @GetMapping("/{id}/temporadas/todas")
+    public List<EpisodioDTO> obterTodasTemporadas(@PathVariable Long id) {
+        return servico.obterTodasTemporadas(id);
     }
 }
